@@ -82,7 +82,7 @@ export function HackathonsShowcase() {
         {hackathons.map((h, i) => (
           <section
             key={h.title}
-            className="pin-card relative w-full min-h-screen flex flex-col md:flex-row justify-between items-center px-[6vw] py-[8vh] border-b border-line bg-[#111110] text-white overflow-hidden shadow-2xl"
+            className="pin-card relative w-full min-h-screen flex flex-col md:flex-row justify-between items-center px-[6vw] pt-[75px] pb-[110px] md:pt-[85px] md:pb-[120px] border-b border-line bg-[#111110] text-white overflow-hidden shadow-2xl"
             style={{ perspective: '1000px' }}
           >
             {/* Darkening Overlay for Scroll Swapping */}
@@ -94,48 +94,48 @@ export function HackathonsShowcase() {
             {/* Glowing Accent Top Line */}
             <div className="absolute top-0 left-12 right-12 h-[1px] bg-gradient-to-r from-transparent via-orange/30 to-transparent z-10" />
 
-            {/* Large Number Index (01), (02) - Exactly from awwwards pin-card */}
-            <span className="text-[clamp(54px,9vw,150px)] font-bold text-mut/30 font-mono self-start md:self-center select-none leading-none mb-6 md:mb-0">
+            {/* Large Number Index (01), (02) - Elevated and positioned clearly */}
+            <span className="text-[clamp(44px,7.5vw,130px)] font-bold text-mut/25 font-mono self-start md:self-center select-none leading-none mb-4 md:mb-0">
               ({String(i + 1).padStart(2, '0')})
             </span>
 
-            {/* Pin Card Content (Width ~ 65%) */}
-            <div className="w-full md:w-[66%] flex flex-col items-start justify-center z-10 space-y-5">
+            {/* Pin Card Content (Elevated with compact spacing to guarantee bottom visibility) */}
+            <div className="w-full md:w-[68%] flex flex-col items-start justify-center z-10 space-y-3.5 md:space-y-4">
               {/* Rank Badge & Event Info */}
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-xs font-bold uppercase tracking-[0.12em] text-orange bg-orange/15 border border-orange/30 px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-sm">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-orange bg-orange/15 border border-orange/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange animate-pulse" />
                   {h.rank}
                 </span>
-                <span className="text-xs font-semibold text-mut num">
+                <span className="text-[11.5px] font-semibold text-mut num">
                   {h.event} • {h.date}
                 </span>
               </div>
 
-              {/* Title */}
-              <h3 className="text-[clamp(26px,3.6vw,56px)] font-semibold uppercase tracking-[-0.03em] text-white leading-[1.02]">
-                {h.title}
-              </h3>
+              {/* Title & Subtitle */}
+              <div>
+                <h3 className="text-[clamp(24px,3.2vw,48px)] font-semibold uppercase tracking-[-0.03em] text-white leading-[1.02]">
+                  {h.title}
+                </h3>
+                <p className="text-[12px] font-semibold text-orange tracking-wider uppercase mt-1">
+                  {h.project}
+                </p>
+              </div>
 
-              {/* Subtitle / Project Focus */}
-              <p className="text-xs font-semibold text-orange tracking-wider uppercase">
-                {h.project}
-              </p>
-
-              {/* Rich Photo Image Container */}
+              {/* Rich Photo Image Container (Optimized height to prevent bottom overflow) */}
               {h.image && (
-                <div className="relative w-full aspect-[16/9] max-h-[380px] rounded-2xl overflow-hidden border border-line/80 bg-black/60 shadow-2xl group/img">
+                <div className="relative w-full aspect-[21/9] md:aspect-[16/7] max-h-[250px] md:max-h-[280px] rounded-2xl overflow-hidden border border-line/80 bg-black/60 shadow-xl group/img">
                   <Image
                     src={h.image}
                     alt={h.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 65vw"
+                    sizes="(max-width: 768px) 100vw, 68vw"
                     className="object-cover scale-100 group-hover/img:scale-105 transition-transform duration-700 ease-folio"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
 
                   {h.highlight && (
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs font-mono text-grey bg-black/75 backdrop-blur-md px-4 py-2 rounded-xl border border-line">
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-grey bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-line">
                       <span className="text-orange font-semibold">{h.highlight}</span>
                       <span className="hidden sm:inline text-mut">{h.event}</span>
                     </div>
@@ -144,17 +144,17 @@ export function HackathonsShowcase() {
               )}
 
               {/* Description */}
-              <p className="text-mut text-[clamp(14px,1.2vw,17px)] leading-[1.65] max-w-[62ch]">
+              <p className="text-mut text-[13.5px] md:text-[14.5px] leading-[1.55] max-w-[62ch]">
                 {h.description}
               </p>
 
-              {/* Tags & Action Link */}
-              <div className="flex flex-wrap items-center justify-between w-full gap-4 pt-2 border-t border-line/40">
+              {/* Tags & Action Link (Elevated and 100% visible) */}
+              <div className="flex flex-wrap items-center justify-between w-full gap-3 pt-2.5 border-t border-line/40">
                 <div className="flex flex-wrap gap-1.5">
                   {h.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-[11px] font-semibold uppercase tracking-[0.08em] px-3 py-1 rounded-lg border border-line bg-black/50 text-mut"
+                      className="text-[10px] md:text-[10.5px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-md border border-line bg-black/50 text-mut"
                     >
                       {tag}
                     </span>
@@ -166,7 +166,7 @@ export function HackathonsShowcase() {
                     href={h.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btnAll !py-2.5 !px-5 text-xs uppercase tracking-wider !inline-flex items-center gap-2"
+                    className="btnAll !py-2 !px-4 text-[11.5px] uppercase tracking-wider !inline-flex items-center gap-1.5"
                   >
                     View Project <b>↗</b>
                   </a>
