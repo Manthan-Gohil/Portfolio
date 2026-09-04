@@ -6,6 +6,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '@/lib/data';
 import { PixelMosaic } from '@/components/home/PixelMosaic';
+import { BlockReveal } from './BlockReveal';
+import { ExperienceInteractive } from './ExperienceInteractive';
+import { HackathonsShowcase } from './HackathonsShowcase';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,17 +20,18 @@ function Words({ tokens }: { tokens: Tok[] }) {
       {tokens.map((tok, i) => {
         const bold = Array.isArray(tok);
         const text = bold ? tok[0] : tok;
-        const words = text.split(' ').map((w, j) => (
-          <span key={`${i}-${j}`} className="about-bio-word inline-block opacity-[0.16]">
-            {w}{' '}
+        const words = text.split(/\s+/).filter(Boolean);
+        return (
+          <span key={i} className={bold ? 'text-grey font-semibold' : ''}>
+            {words.map((w, j) => (
+              <span
+                key={`${i}-${j}`}
+                className="about-bio-word inline-block opacity-[0.16] mr-[0.28em]"
+              >
+                {w}
+              </span>
+            ))}
           </span>
-        ));
-        return bold ? (
-          <b key={i} className="text-grey font-semibold">
-            {words}
-          </b>
-        ) : (
-          <span key={i}>{words}</span>
         );
       })}
     </>
@@ -97,6 +101,40 @@ export function AboutPage() {
           scrollTrigger: { trigger: '.about-bio-copy', start: 'top 82%', end: 'bottom 55%', scrub: true },
         });
       }
+
+      const storyImg = root.querySelector('.story-img-reveal');
+      if (storyImg) {
+        gsap.fromTo(
+          storyImg,
+          { width: '48px', opacity: 0.8 },
+          {
+            width: '130px',
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.story-headline-wrap',
+              start: 'top 85%',
+              end: 'top 45%',
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      const animBlocks = gsap.utils.toArray<HTMLElement>('.page-reveal', root);
+      animBlocks.forEach((b) => {
+        gsap.fromTo(
+          b,
+          { autoAlpha: 0, y: 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: b, start: 'top 88%', once: true },
+          }
+        );
+      });
 
       const counters = gsap.utils.toArray<HTMLElement>('[data-count]', root);
       counters.forEach((el) => {
@@ -241,9 +279,25 @@ export function AboutPage() {
       <section className="py-[clamp(64px,10vh,120px)] section-pad">
         <span className="lbl">The story</span>
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-6 md:gap-[clamp(24px,5vw,90px)] mt-6">
-          <h2 className="font-semibold uppercase tracking-[-0.03em] leading-[0.98] text-[clamp(32px,4.6vw,72px)] max-w-[14ch]">
-            Real systems, engineered to scale.
-          </h2>
+          <div className="story-headline-wrap">
+            <h2 className="font-semibold uppercase tracking-[-0.03em] leading-[0.98] text-[clamp(32px,4.6vw,72px)] max-w-[14ch]">
+              Real systems,
+              <br />
+              <span className="inline-flex items-center gap-2.5 flex-wrap">
+                <span>engineered to</span>
+                <span className="story-img-reveal inline-block h-[clamp(30px,4vw,52px)] rounded-xl overflow-hidden relative border border-orange/40 align-middle shrink-0 bg-black/40">
+                  <Image
+                    src="/images/codesense/cover.jpg"
+                    alt="Engineering system preview"
+                    fill
+                    sizes="200px"
+                    className="object-cover scale-110"
+                  />
+                </span>
+                <span className="text-orange">scale.</span>
+              </span>
+            </h2>
+          </div>
           <div className="about-bio-copy">
             {BIO.map((p, i) => (
               <p
@@ -266,6 +320,52 @@ export function AboutPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Professional Experience Section with Spring Cursor Follower (image hover effect) */}
+      <section className="page-reveal py-[clamp(64px,10vh,120px)] border-t border-line section-pad bg-[#0f0f0e]">
+        <ExperienceInteractive />
+      </section>
+
+      {/* Hackathons & Achievements Showcase with Awwwards Pinned Stacking Cards */}
+      <section className="border-t border-line bg-[#0a0a09]">
+        <HackathonsShowcase />
+      </section>
+
+      {/* Technical Skills Matrix */}
+      <section className="page-reveal py-[clamp(64px,10vh,120px)] border-t border-line section-pad bg-[#0c0c0b]">
+        <span className="lbl">Skills & Tech Stack</span>
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-6 md:gap-[clamp(24px,5vw,90px)] mt-6">
+          <div>
+            <h2 className="font-semibold uppercase tracking-[-0.03em] leading-[0.98] text-[clamp(32px,4.6vw,68px)] max-w-[14ch]">
+              Technical Ecosystem.
+            </h2>
+            <p className="text-mut text-[15px] leading-[1.6] mt-4 max-w-[40ch]">
+              Comprehensive proficiencies across frontend engineering, backend architecture, AI/LLM
+              agentic workflows, and database systems.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {portfolioData.skills.map((cat) => (
+              <div key={cat.category} className="border-t border-line pt-4">
+                <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-orange mb-3">
+                  {cat.category}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {cat.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="text-[13px] font-semibold tracking-[-0.01em] px-3.5 py-1.5 rounded-lg border border-line bg-black/60 text-grey hover:border-orange hover:text-white transition-colors duration-200"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

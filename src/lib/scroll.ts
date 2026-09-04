@@ -1,4 +1,5 @@
 import Lenis from 'lenis';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export const scroll = {
   instance: null as Lenis | null,
@@ -11,6 +12,9 @@ export const scroll = {
       smoothWheel: true,
     });
     scroll.instance = lenis;
+
+    lenis.on('scroll', ScrollTrigger.update);
+
     const raf = (time: number) => {
       lenis.raf(time);
       requestAnimationFrame(raf);

@@ -39,31 +39,31 @@ export function Manifesto() {
       <span className="lbl" id="manifesto-title">
         Philosophy
       </span>
-      <p className="mt-[22px] font-semibold tracking-[-0.02em] leading-[1.12] text-[clamp(28px,4.4vw,70px)] max-w-[25ch] uppercase">
-        <span className="w inline-block">I </span>{' '}
-        <span className="w inline-block">build </span>{' '}
-        <span className="w inline-block">systems </span>{' '}
-        <span className="w inline-block">that </span>{' '}
-        <span className="w inline-block">go </span>{' '}
-        <span className="w inline-block">beyond </span>{' '}
-        <span className="w inline-block">demos </span>{' '}
-        <span className="w inline-block">— </span>{' '}
-        <span className="w inline-block">grounded </span>{' '}
+      <p className="mt-[22px] font-semibold tracking-[-0.02em] leading-[1.18] text-[clamp(28px,4.4vw,70px)] max-w-[25ch] uppercase">
+        <span className="w inline-block mr-[0.25em]">I</span>
+        <span className="w inline-block mr-[0.25em]">build</span>
+        <span className="w inline-block mr-[0.25em]">systems</span>
+        <span className="w inline-block mr-[0.25em]">that</span>
+        <span className="w inline-block mr-[0.25em]">go</span>
+        <span className="w inline-block mr-[0.25em]">beyond</span>
+        <span className="w inline-block mr-[0.25em]">demos</span>
+        <span className="w inline-block mr-[0.25em]">—</span>
+        <span className="w inline-block mr-[0.25em]">grounded</span>
         <em className="o not-italic inline">
-          <span className="w inline-block">AI </span>{' '}
-          <span className="w inline-block">pipelines, </span>
-        </em>{' '}
-        <span className="w inline-block">multi-agent </span>{' '}
-        <span className="w inline-block">workflows, </span>{' '}
-        <span className="w inline-block">and </span>{' '}
-        <span className="w inline-block">scalable </span>{' '}
+          <span className="w inline-block mr-[0.25em]">AI</span>
+          <span className="w inline-block mr-[0.25em]">pipelines,</span>
+        </em>
+        <span className="w inline-block mr-[0.25em]">multi-agent</span>
+        <span className="w inline-block mr-[0.25em]">workflows,</span>
+        <span className="w inline-block mr-[0.25em]">and</span>
+        <span className="w inline-block mr-[0.25em]">scalable</span>
         <em className="o not-italic inline">
-          <span className="w inline-block">full-stack </span>
-        </em>{' '}
-        <span className="w inline-block">architecture </span>{' '}
-        <span className="w inline-block">with </span>{' '}
-        <span className="w inline-block">real-world </span>{' '}
-        <span className="w inline-block">substance. </span>
+          <span className="w inline-block mr-[0.25em]">full-stack</span>
+        </em>
+        <span className="w inline-block mr-[0.25em]">architecture</span>
+        <span className="w inline-block mr-[0.25em]">with</span>
+        <span className="w inline-block mr-[0.25em]">real-world</span>
+        <span className="w inline-block mr-[0.25em]">substance.</span>
       </p>
     </section>
   );

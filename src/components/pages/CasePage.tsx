@@ -81,61 +81,58 @@ export function CasePage({ id }: { id: string }) {
       });
 
       const blocks = gsap.utils.toArray<HTMLElement>('.case-anim-block', root);
-      gsap.set(blocks, { autoAlpha: 0, y: 50 });
-      gsap.to(blocks, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: root, start: 'top 45%', once: true },
-      });
-
-      const stats = gsap.utils.toArray<HTMLElement>('.case-stats div', root);
-      gsap.set(stats, { autoAlpha: 0, y: 50 });
-      gsap.to(stats, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: '.case-stats', start: 'top 88%', once: true },
+      blocks.forEach((block) => {
+        gsap.fromTo(
+          block,
+          { autoAlpha: 0, y: 35 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: block, start: 'top 85%', once: true },
+          }
+        );
       });
     }, rootRef);
 
     return () => {
-      ctx.revert();
       document.body.classList.remove('-case');
+      ctx.revert();
     };
-  }, [project]);
+  }, [id]);
 
   return (
-    <article ref={rootRef} aria-labelledby="case-title">
-      {/* Hero */}
-      <div className="case-hero relative h-[88svh] overflow-hidden flex items-end">
-        <Image
-          src={project.imgs[0]}
-          alt={`${project.name} — hero image of the project`}
-          fill
-          sizes="100vw"
-          priority
-          className="case-hero-img object-cover filter brightness-60"
-        />
-        <div className="case-blinds absolute inset-0 z-[3] flex flex-col pointer-events-none" aria-hidden="true">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <i key={i} className="flex-1 bg-black block w-full" />
+    <article ref={rootRef} className="relative z-[1] overflow-x-hidden">
+      {/* Hero Visual with Blinds */}
+      <div className="case-hero relative h-[86svh] overflow-hidden">
+        <div className="case-blinds absolute inset-0 z-[3] flex pointer-events-none">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <i key={i} className="flex-1 h-full bg-black origin-top block will-change-transform" />
           ))}
         </div>
-        <div
-          className="case-idx absolute z-[2] top-[104px] right-pad font-semibold tracking-[-0.02em] text-[clamp(40px,7vw,110px)] text-grey/30 num"
-          aria-hidden="true"
-        >
-          {String(idx >= 0 ? idx + 1 : 1).padStart(2, '0')}
+
+        <Image
+          src={project.imgs[0]}
+          alt={`${project.name} — project cover`}
+          fill
+          priority
+          sizes="100vw"
+          className="case-hero-img object-cover will-change-transform"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20 z-[2]" />
+
+        {/* Hero Title & Index */}
+        <div className="absolute left-pad right-pad bottom-[clamp(28px,6vh,64px)] z-[4] flex justify-between items-end">
+          <div className="lbl text-grey -plain">
+            <span className="case-idx text-orange font-bold text-lg mr-3">
+              {String((idx >= 0 ? idx : 0) + 1).padStart(2, '0')}
+            </span>
+            {project.tags.slice(0, 3).join(' · ')}
+          </div>
         </div>
-        <h1
-          id="case-title"
-          className="relative z-[2] px-pad pb-[6vh] font-semibold uppercase tracking-[-0.03em] leading-[0.94] text-[clamp(52px,10.5vw,170px)]"
-        >
+
+        <h1 className="absolute left-pad right-pad bottom-[clamp(70px,12vh,120px)] z-[4] font-semibold uppercase tracking-[-0.035em] leading-[0.92] text-[clamp(44px,9vw,150px)] max-w-[12ch]">
           {project.title.map((t, i) => (
             <span key={i} className="case-title-line block overflow-hidden">
               <span className="inline-block">{t}</span>
@@ -144,8 +141,8 @@ export function CasePage({ id }: { id: string }) {
         </h1>
       </div>
 
-      {/* Metadata Bar */}
-      <div className="case-meta grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4.5 py-6 px-pad border-b border-line">
+      {/* Metadata & Direct Links Bar */}
+      <div className="case-meta grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 py-6 px-pad border-b border-line bg-black/40 backdrop-blur-sm">
         <div>
           <small className="block text-[10px] font-semibold tracking-[0.14em] uppercase text-mut mb-1.5">
             Category
@@ -166,7 +163,7 @@ export function CasePage({ id }: { id: string }) {
         </div>
         <div>
           <small className="block text-[10px] font-semibold tracking-[0.14em] uppercase text-mut mb-1.5">
-            Year
+            Timeline
           </small>
           <b className="font-semibold text-[15px] num">{project.year}</b>
         </div>
@@ -177,7 +174,7 @@ export function CasePage({ id }: { id: string }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-bold uppercase tracking-[0.12em] px-3 py-1.5 rounded-full border border-line hover:border-orange hover:text-orange transition-colors"
+                className="text-[11px] font-bold uppercase tracking-[0.12em] px-4 py-2 rounded-full border border-line hover:border-orange hover:text-orange transition-colors flex items-center gap-1.5"
               >
                 GitHub ↗
               </a>
@@ -187,7 +184,7 @@ export function CasePage({ id }: { id: string }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] font-bold uppercase tracking-[0.12em] px-3 py-1.5 rounded-full bg-orange text-black font-bold hover:bg-white transition-colors"
+                className="text-[11px] font-bold uppercase tracking-[0.12em] px-4 py-2 rounded-full bg-orange text-black font-bold hover:bg-white transition-colors flex items-center gap-1.5"
               >
                 Live Demo ↗
               </a>
@@ -198,97 +195,156 @@ export function CasePage({ id }: { id: string }) {
 
       {/* The Brief */}
       <div className="case-anim-block py-[clamp(56px,9vh,110px)] px-pad grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-6 md:gap-[clamp(24px,4vw,80px)]">
-        <span className="lbl !text-orange">The brief</span>
-        <p className="text-[clamp(20px,2.3vw,32px)] leading-[1.32] font-medium tracking-[-0.01em]">
+        <span className="lbl !text-orange">Project Overview</span>
+        <p className="text-[clamp(20px,2.3vw,32px)] leading-[1.36] font-medium tracking-[-0.01em]">
           {project.intro}
         </p>
       </div>
 
-      {/* Full Bleed Visual */}
-      <figure className="case-prl relative overflow-hidden mx-pad aspect-[16/9]">
+      {/* System Architecture Flow Diagram */}
+      {project.architecture && project.architecture.length > 0 && (
+        <section className="case-anim-block px-pad pb-[clamp(50px,8vh,100px)]">
+          <div className="p-6 md:p-10 border border-line rounded-2xl bg-[#111110]">
+            <span className="lbl !text-mut mb-4 block">System Architecture & Pipeline</span>
+            <div className="flex flex-wrap items-center gap-2.5 md:gap-3 mt-4">
+              {project.architecture.map((step, idx) => (
+                <div key={step} className="flex items-center gap-2.5 md:gap-3">
+                  <div className="px-4 py-2.5 rounded-lg border border-line bg-black flex items-center gap-2.5">
+                    <span className="w-5 h-5 rounded-full bg-orange/15 text-orange text-[10px] font-bold flex items-center justify-center">
+                      {idx + 1}
+                    </span>
+                    <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-grey">
+                      {step}
+                    </span>
+                  </div>
+                  {idx < (project.architecture?.length ?? 0) - 1 && (
+                    <span className="text-orange font-bold text-lg select-none">→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Full Bleed Parallax Visual */}
+      <figure className="case-prl relative overflow-hidden mx-pad aspect-[16/9] rounded-xl">
         <Image
           src={project.imgs[3] ?? project.imgs[0]}
-          alt={`${project.name} — design overview`}
+          alt={`${project.name} — interface overview`}
           fill
           sizes="100vw"
           className="object-cover scale-[1.15] will-change-transform"
         />
       </figure>
 
-      {/* The Problem */}
-      <div className="case-anim-block py-[clamp(56px,9vh,110px)] px-pad grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-6 md:gap-[clamp(24px,4vw,80px)]">
-        <h3 className="font-semibold uppercase tracking-[-0.02em] text-[clamp(24px,3.2vw,44px)]">
-          The <span className="text-orange">problem</span>
-        </h3>
+      {/* The Challenge & Approach */}
+      <div className="case-anim-block py-[clamp(56px,9vh,110px)] px-pad grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[clamp(30px,5vw,90px)] border-b border-line">
         <div>
-          <p className="text-mut max-w-[56ch] mb-4 text-base leading-relaxed">
+          <h3 className="font-semibold uppercase tracking-[-0.02em] text-[clamp(24px,3.2vw,40px)] mb-4">
+            The <span className="text-orange">Challenge</span>
+          </h3>
+          <p className="text-mut text-[16px] leading-[1.65] max-w-[50ch]">
             {project.challenge}
           </p>
         </div>
-      </div>
 
-      {/* Duo Visuals */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[clamp(14px,2vw,28px)] mx-pad my-[clamp(14px,2vw,28px)]">
-        <figure className="case-prl relative overflow-hidden aspect-[4/5]">
-          <Image
-            src={project.imgs[1] ?? project.imgs[0]}
-            alt={`${project.name} — interface detail 1`}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-cover scale-[1.15] will-change-transform"
-          />
-        </figure>
-        <figure className="case-prl relative overflow-hidden aspect-[4/5]">
-          <Image
-            src={project.imgs[2] ?? project.imgs[0]}
-            alt={`${project.name} — interface detail 2`}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-cover scale-[1.15] will-change-transform"
-          />
-        </figure>
-      </div>
-
-      {/* The Move */}
-      <div className="case-anim-block py-[clamp(56px,9vh,110px)] px-pad grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-6 md:gap-[clamp(24px,4vw,80px)]">
-        <h3 className="font-semibold uppercase tracking-[-0.02em] text-[clamp(24px,3.2vw,44px)]">
-          The <span className="text-orange">move</span>
-        </h3>
         <div>
-          <p className="text-mut max-w-[56ch] mb-4 text-base leading-relaxed">
+          <h3 className="font-semibold uppercase tracking-[-0.02em] text-[clamp(24px,3.2vw,40px)] mb-4">
+            The <span className="text-orange">Engineering Solution</span>
+          </h3>
+          <p className="text-mut text-[16px] leading-[1.65] max-w-[50ch]">
             {project.approach}
           </p>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="case-stats grid grid-cols-1 sm:grid-cols-3 gap-0.5 px-pad pb-[clamp(56px,9vh,110px)]">
-        {project.stats.map(([val, label], i) => (
-          <div key={i} className="border-t-2 border-orange pt-3">
-            <b className="block font-semibold tracking-[-0.03em] text-[clamp(34px,4.6vw,70px)] leading-none text-orange num">
-              {val}
-            </b>
-            <small className="text-[11px] font-semibold tracking-[0.12em] uppercase text-mut">
-              {label}
-            </small>
+      {/* Core Features & Highlights Grid */}
+      {project.features && project.features.length > 0 && (
+        <section className="case-anim-block py-[clamp(56px,9vh,110px)] px-pad">
+          <span className="lbl mb-6 block">Core Features & Technical Depth</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            {project.features.map((f, i) => (
+              <div
+                key={f.title}
+                className="p-6 md:p-8 border border-line rounded-xl bg-black/60 hover:border-orange/60 transition-colors duration-300 group"
+              >
+                <span className="text-orange font-bold text-xs uppercase tracking-[0.14em] block mb-2">
+                  0{i + 1} — Feature
+                </span>
+                <h4 className="font-semibold uppercase tracking-[-0.02em] text-[20px] text-grey mb-3 group-hover:text-white transition-colors">
+                  {f.title}
+                </h4>
+                <p className="text-mut text-[15px] leading-[1.6]">
+                  {f.desc}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+        </section>
+      )}
+
+      {/* Duo Visuals */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[clamp(14px,2vw,28px)] mx-pad mb-[clamp(40px,8vh,90px)]">
+        <figure className="case-prl relative overflow-hidden aspect-[4/5] rounded-xl">
+          <Image
+            src={project.imgs[1] ?? project.imgs[0]}
+            alt={`${project.name} — interface screen 1`}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover scale-[1.15] will-change-transform"
+          />
+        </figure>
+        <figure className="case-prl relative overflow-hidden aspect-[4/5] rounded-xl">
+          <Image
+            src={project.imgs[2] ?? project.imgs[0]}
+            alt={`${project.name} — interface screen 2`}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover scale-[1.15] will-change-transform"
+          />
+        </figure>
       </div>
 
-      {/* Transition to Next Project */}
+      {/* Key Project Stats */}
+      <div className="case-anim-block border-t border-b border-line py-[clamp(48px,8vh,90px)] px-pad bg-[#111110]">
+        <span className="lbl !text-orange mb-6 block">Impact & Metrics</span>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          {project.stats.map(([num, label]) => (
+            <div key={label} className="border-t border-line pt-4">
+              <b className="block font-semibold tracking-[-0.03em] text-[clamp(40px,5.5vw,78px)] leading-none num text-grey">
+                {num}
+              </b>
+              <small className="text-[12px] font-semibold tracking-[0.14em] uppercase text-mut mt-2 block">
+                {label}
+              </small>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <PixelMosaic variant="toGrey" />
 
       {/* Next Project Teaser */}
       <a
-        className="block py-[clamp(64px,11vh,130px)] px-pad text-center bg-grey text-black group cursor-pointer transition-colors duration-300"
+        className="block bg-grey text-black py-[clamp(80px,14vh,160px)] px-pad group transition-colors duration-300 hover:bg-white"
         href={`#/work/${next.id}`}
+        aria-label={`Next project: ${next.name}`}
       >
-        <small className="text-[11px] font-semibold tracking-[0.16em] uppercase text-mut-l block">
-          Next project
-        </small>
-        <span className="block font-semibold uppercase tracking-[-0.03em] leading-[0.95] text-[clamp(48px,9.5vw,150px)] mt-3 transition-colors duration-300 group-hover:text-orange">
-          {next.name} &rarr;
-        </span>
+        <div className="flex justify-between items-baseline mb-4 text-[#7b7b76]">
+          <span className="lbl !text-mut-l">Next Project</span>
+          <span className="lbl -plain font-bold text-xs uppercase text-black">
+            {next.tags.slice(0, 2).join(' · ')}
+          </span>
+        </div>
+        <div className="flex justify-between items-end gap-6">
+          <span className="font-semibold uppercase tracking-[-0.035em] leading-[0.92] text-[clamp(48px,9.5vw,140px)] group-hover:text-orange transition-colors duration-300">
+            {next.name}
+          </span>
+          <span className="text-[clamp(32px,6vw,72px)] font-bold text-black group-hover:text-orange group-hover:translate-x-3 transition-all duration-300">
+            &rarr;
+          </span>
+        </div>
       </a>
     </article>
   );

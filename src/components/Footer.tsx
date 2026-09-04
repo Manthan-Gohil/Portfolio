@@ -23,22 +23,22 @@ export function Footer() {
 
       {/* Main CTA */}
       <a
-        className="block text-center group cursor-pointer"
+        className="block text-center group cursor-pointer select-none"
         data-mail=""
         href={`mailto:${profile.email}`}
         data-magnet="0.06"
       >
         <span className="lbl text-mut">Ready to build something impactful?</span>
         <span
-          className="block overflow-hidden mt-4 font-semibold uppercase tracking-[-0.035em] leading-none text-[clamp(64px,15.5vw,250px)] h-[1em]"
+          className="block overflow-hidden mt-4 font-semibold uppercase tracking-[-0.035em] text-[clamp(48px,12.5vw,220px)] leading-[1.05] h-[1.05em] whitespace-nowrap"
           aria-hidden="true"
         >
-          <span className="block transition-transform duration-550 ease-folio group-hover:-translate-y-[1em]">
-            <span className="block h-[1em] leading-none">
-              LET&rsquo;S <span className="text-orange">CONNECT</span>
+          <span className="block transition-transform duration-500 ease-folio group-hover:-translate-y-[1.05em] will-change-transform">
+            <span className="block h-[1.05em] leading-[1.05] whitespace-nowrap">
+              LET&rsquo;S <span className="text-orange">TALK</span>
             </span>
-            <span className="block h-[1em] leading-none text-orange">
-              LET&rsquo;S CONNECT
+            <span className="block h-[1.05em] leading-[1.05] text-orange whitespace-nowrap">
+              LET&rsquo;S TALK
             </span>
           </span>
         </span>

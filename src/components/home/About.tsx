@@ -16,17 +16,18 @@ function Words({ tokens }: { tokens: Tok[] }) {
       {tokens.map((tok, i) => {
         const bold = Array.isArray(tok);
         const text = bold ? tok[0] : tok;
-        const words = text.split(' ').map((w, j) => (
-          <span key={`${i}-${j}`} className="about-word inline-block opacity-[0.18]">
-            {w}{' '}
+        const words = text.split(/\s+/).filter(Boolean);
+        return (
+          <span key={i} className={bold ? 'text-black font-semibold' : ''}>
+            {words.map((w, j) => (
+              <span
+                key={`${i}-${j}`}
+                className="about-word inline-block opacity-[0.18] mr-[0.28em]"
+              >
+                {w}
+              </span>
+            ))}
           </span>
-        ));
-        return bold ? (
-          <b key={i} className="text-black font-semibold">
-            {words}
-          </b>
-        ) : (
-          <span key={i}>{words}</span>
         );
       })}
     </>

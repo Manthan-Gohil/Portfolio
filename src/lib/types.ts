@@ -28,6 +28,8 @@ export interface Project {
   intro: string;
   challenge: string;
   approach: string;
+  architecture?: string[];
+  features?: { title: string; desc: string }[];
   stats: [string, string][];
   github?: string;
   live?: string;
@@ -50,6 +52,37 @@ export interface Principle {
 export interface Award {
   name: string;
   detail: string;
+  badge?: string;
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  description: string;
+  bullets: string[];
+  tech: string[];
+  image?: string;
+  stats?: string;
+}
+
+export interface Hackathon {
+  title: string;
+  rank: string;
+  event: string;
+  date: string;
+  project: string;
+  description: string;
+  tags: string[];
+  image?: string;
+  link?: string;
+  highlight?: string;
+}
+
+export interface SkillCategory {
+  category: string;
+  skills: string[];
 }
 
 export interface PortfolioData {
@@ -58,4 +91,7 @@ export interface PortfolioData {
   services: Service[];
   principles: Principle[];
   awards: Award[];
+  experiences: Experience[];
+  hackathons: Hackathon[];
+  skills: SkillCategory[];
 }
