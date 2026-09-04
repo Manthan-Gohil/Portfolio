@@ -9,6 +9,7 @@ import { PixelMosaic } from '@/components/home/PixelMosaic';
 import { BlockReveal } from './BlockReveal';
 import { ExperienceInteractive } from './ExperienceInteractive';
 import { HackathonsShowcase } from './HackathonsShowcase';
+import { SkillsGuidingLight } from './SkillsGuidingLight';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -334,41 +335,8 @@ export function AboutPage() {
         <HackathonsShowcase />
       </section>
 
-      {/* Technical Skills Matrix */}
-      <section className="page-reveal py-[clamp(64px,10vh,120px)] border-t border-line section-pad bg-[#0c0c0b]">
-        <span className="lbl">Skills & Tech Stack</span>
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-6 md:gap-[clamp(24px,5vw,90px)] mt-6">
-          <div>
-            <h2 className="font-semibold uppercase tracking-[-0.03em] leading-[0.98] text-[clamp(32px,4.6vw,68px)] max-w-[14ch]">
-              Technical Ecosystem.
-            </h2>
-            <p className="text-mut text-[15px] leading-[1.6] mt-4 max-w-[40ch]">
-              Comprehensive proficiencies across frontend engineering, backend architecture, AI/LLM
-              agentic workflows, and database systems.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            {portfolioData.skills.map((cat) => (
-              <div key={cat.category} className="border-t border-line pt-4">
-                <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-orange mb-3">
-                  {cat.category}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {cat.skills.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[13px] font-semibold tracking-[-0.01em] px-3.5 py-1.5 rounded-lg border border-line bg-black/60 text-grey hover:border-orange hover:text-white transition-colors duration-200"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Technical Skills Matrix with Codegrid Guiding Light Interactive Spotlight */}
+      <SkillsGuidingLight />
 
       {/* Principles Section */}
       <section className="bg-grey text-black py-[clamp(64px,10vh,120px)] section-pad">
